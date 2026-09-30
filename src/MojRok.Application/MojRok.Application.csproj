@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--
+      Application references EF Core abstractions (DbSet<T>) for IAppDbContext.
+      It never references Npgsql or the concrete AppDbContext â€” only Infrastructure does.
+    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MojRok.Domain\MojRok.Domain.csproj" />
+  </ItemGroup>
+</Project>
