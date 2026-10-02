@@ -490,3 +490,6 @@ src/**/appsettings.Local.json
 # User secrets
 secrets.json
 *.secrets.json
+
+# Private setup scripts
+*.ps1
