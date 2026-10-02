@@ -3,14 +3,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MojRok.Application.Auth;
+using MojRok.Application.Categories;
 using MojRok.Application.Users;
 using MojRok.Infrastructure.Extensions;
+using MojRok.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CategoryService>();
 builder.Services.AddControllers();
 
 var jwtKey = builder.Configuration["Jwt:Key"]
@@ -67,6 +70,13 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+// Seed system default categories on first startup (idempotent)
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await DbSeeder.SeedDefaultCategoriesAsync(db);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -79,3 +89,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
