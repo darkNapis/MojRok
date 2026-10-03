@@ -7,6 +7,8 @@ using MojRok.Application.Auth;
 using MojRok.Application.Categories;
 using MojRok.Application.Deadlines;
 using MojRok.Application.Reminders;
+using MojRok.Application.Dashboard;
+using MojRok.Application.Services;
 using MojRok.Application.Users;
 using MojRok.Infrastructure.BackgroundJobs;
 using MojRok.Infrastructure.Extensions;
@@ -21,6 +23,8 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<DeadlineService>();
 builder.Services.AddScoped<ReminderService>();
+builder.Services.AddScoped<DashboardService>();
+builder.Services.AddScoped<CitizenServiceService>();
 
 builder.Services.AddHostedService<ReminderBackgroundService>();
 
@@ -108,6 +112,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await DbSeeder.SeedDefaultCategoriesAsync(db);
+    await CitizenServicesSeeder.SeedAsync(db);
 }
 
 if (app.Environment.IsDevelopment())
