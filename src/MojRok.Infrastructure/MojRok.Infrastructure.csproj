@@ -18,4 +18,7 @@
     <ProjectReference Include="..\MojRok.Application\MojRok.Application.csproj" />
     <ProjectReference Include="..\MojRok.Domain\MojRok.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
 </Project>
